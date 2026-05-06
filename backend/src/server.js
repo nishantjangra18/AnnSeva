@@ -4,17 +4,16 @@ import { Server } from 'socket.io';
 import { connectDb } from './config/db.js';
 import { createApp } from './app.js';
 import { registerSocketHandlers } from './sockets/location.socket.js';
-import { corsOrigins } from './config/cors.js';
 
 dotenv.config();
 
-const port = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
 const app = createApp();
 const server = http.createServer(app);
 
 export const io = new Server(server, {
   cors: {
-    origin: corsOrigins(),
+    origin: '*',
     credentials: true
   }
 });
@@ -24,6 +23,6 @@ registerSocketHandlers(io);
 
 await connectDb();
 
-server.listen(port, () => {
-  console.log(`AnnSeva API listening on http://localhost:${port}`);
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on port ${PORT}`);
 });

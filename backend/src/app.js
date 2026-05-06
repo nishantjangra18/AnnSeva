@@ -9,13 +9,12 @@ import locationRoutes from './routes/location.routes.js';
 import profileRoutes from './routes/profile.routes.js';
 import notificationRoutes from './routes/notification.routes.js';
 import { errorHandler } from './middleware/error.middleware.js';
-import { corsOrigins } from './config/cors.js';
 
 export function createApp() {
   const app = express();
 
   app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
-  app.use(cors({ origin: corsOrigins(), credentials: true }));
+  app.use(cors({ origin: '*', credentials: true }));
   app.use(express.json({ limit: '8mb' }));
   app.use('/uploads', express.static('uploads'));
   app.use(morgan('dev'));
